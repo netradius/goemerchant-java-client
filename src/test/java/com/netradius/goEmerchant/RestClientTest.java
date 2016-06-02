@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.map.annotate.JsonSerialize;
 import org.junit.Test;
+import org.springframework.objenesis.strategy.StdInstantiatorStrategy;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -18,6 +19,8 @@ public class RestClientTest {
 
 	private String referenceNumber;
 	private String orderId;
+	private String merchantKey = "MerchantKey Here";
+	private String processorId = "ProcessorId Here";
 
 	@Test
 	public void testClient() {
@@ -37,8 +40,8 @@ public class RestClientTest {
 	public void authorize() {
 		Authorize authorize = new Authorize();
 		authorize.setTransactionAmount("1.00");
-		authorize.setMerchantKey("a91c38c3-7d7f-4d29-acc7-927b4dca0dbe");
-		authorize.setProcessorId("15417");
+		authorize.setMerchantKey(merchantKey);
+		authorize.setProcessorId(processorId);
 		authorize.setCardNumber("5499990123456781");
 		authorize.setCardExpMonth("08");
 		authorize.setCardExpYear("17");
@@ -63,8 +66,8 @@ public class RestClientTest {
 	@Test
 	public void batchClose() {
 		BatchClose batchClose = new BatchClose();
-		batchClose.setMerchantKey("a91c38c3-7d7f-4d29-acc7-927b4dca0dbe");
-		batchClose.setProcessorId("15417");
+		batchClose.setMerchantKey(merchantKey);
+		batchClose.setProcessorId(processorId);
 
 		GoEmerchantClient client = new GoEmerchantClient();
 		ApiResponse result = client.batchClose(batchClose);
@@ -76,8 +79,8 @@ public class RestClientTest {
 	public void credit() {
 //635177
 		Credit credit = new Credit();
-		credit.setMerchantKey("a91c38c3-7d7f-4d29-acc7-927b4dca0dbe");
-		credit.setProcessorId("15417");
+		credit.setMerchantKey(merchantKey);
+		credit.setProcessorId(processorId);
 		credit.setRefNumber(referenceNumber);
 		credit.setTransactionAmount("1.00");
 //		credit.setRecurring("none");
@@ -89,8 +92,8 @@ public class RestClientTest {
 	@Test
 	public void query() {
 		Query query = new Query();
-		query.setMerchantKey("a91c38c3-7d7f-4d29-acc7-927b4dca0dbe");
-		query.setProcessorId("15417");
+		query.setMerchantKey(merchantKey);
+		query.setProcessorId(processorId);
 		GoEmerchantClient client = new GoEmerchantClient();
 		ApiResponse result = client.query(query);
 		log.debug(result.toString());
@@ -100,8 +103,8 @@ public class RestClientTest {
 	@Test
 	public void reAuthorize() {
 		ReAuthorize reAuthorize = new ReAuthorize();
-		reAuthorize.setMerchantKey("a91c38c3-7d7f-4d29-acc7-927b4dca0dbe");
-		reAuthorize.setProcessorId("15417");
+		reAuthorize.setMerchantKey(merchantKey);
+		reAuthorize.setProcessorId(processorId);
 		reAuthorize.setRefNumber("635177");
 		reAuthorize.setTransactionAmount("1.00");
 		reAuthorize.setOrderId(orderId);
@@ -114,8 +117,8 @@ public class RestClientTest {
 	@Test
 	public void recurringModify() {
 		RecurringModify recurringModify = new RecurringModify();
-		recurringModify.setMerchantKey("a91c38c3-7d7f-4d29-acc7-927b4dca0dbe");
-		recurringModify.setProcessorId("15417");
+		recurringModify.setMerchantKey(merchantKey);
+		recurringModify.setProcessorId(processorId);
 		recurringModify.setReferenceNumber(referenceNumber);
 		recurringModify.setRecurring("1");
 		recurringModify.setRecurringType(Recurring.monthly);
@@ -135,8 +138,8 @@ public class RestClientTest {
 	@Test
 	public void reSale() {
 		ReSale reSale = new ReSale();
-		reSale.setMerchantKey("a91c38c3-7d7f-4d29-acc7-927b4dca0dbe");
-		reSale.setProcessorId("15417");
+		reSale.setMerchantKey(merchantKey);
+		reSale.setProcessorId(processorId);
 		reSale.setRefNumber("635177");
 		reSale.setTransactionAmount("1.00");
 		reSale.setOrderId(orderId);
@@ -150,8 +153,8 @@ public class RestClientTest {
 	public void sale() {
 		Sale sale = new Sale();
 		sale.setTransactionAmount("1.00");
-		sale.setMerchantKey("a91c38c3-7d7f-4d29-acc7-927b4dca0dbe");
-		sale.setProcessorId("15417");
+		sale.setMerchantKey(merchantKey);
+		sale.setProcessorId(processorId);
 		sale.setCardNumber("5499990123456781");
 		sale.setCardExpMonth("08");
 		sale.setCardExpYear("17");
@@ -171,8 +174,8 @@ public class RestClientTest {
 	@Test
 	public void settle() {
 		Settle settle = new Settle();
-		settle.setMerchantKey("a91c38c3-7d7f-4d29-acc7-927b4dca0dbe");
-		settle.setProcessorId("15417");
+		settle.setMerchantKey(merchantKey);
+		settle.setProcessorId(processorId);
 		settle.setRefNumber(referenceNumber);
 		settle.setTransactionAmount("1.00");
 		GoEmerchantClient client = new GoEmerchantClient();
@@ -183,8 +186,8 @@ public class RestClientTest {
 	@Test
 	public void performVoid() {
 		VoidTransaction voidTransaction = new VoidTransaction();
-		voidTransaction.setMerchantKey("a91c38c3-7d7f-4d29-acc7-927b4dca0dbe");
-		voidTransaction.setProcessorId("15417");
+		voidTransaction.setMerchantKey(merchantKey);
+		voidTransaction.setProcessorId(processorId);
 		voidTransaction.setRefNumber("635177");
 //		voidTransaction.setTransactionAmount("1.00");
 		GoEmerchantClient client = new GoEmerchantClient();
