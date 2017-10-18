@@ -1,4 +1,4 @@
-package com.netradius.goEmerchant.model;
+package com.netradius.goemerchant.model;
 
 import lombok.Data;
 import org.hibernate.validator.constraints.NotEmpty;
@@ -6,27 +6,29 @@ import org.hibernate.validator.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
 /**
+ * Holds ReSale transaction data.
+ *
  * @author Dilip S Sisodia
  */
 @Data
 public class ReSale extends MerchantInformation {
 
-	private boolean autoGenerateOrderId;
+  private boolean autoGenerateOrderId;
 
-	private boolean orderIdIsUnique;
+  private boolean orderIdIsUnique;
 
-	@Size(max = 50)
-	@NotEmpty
-	private String orderId;
+  @Size(max = 50)
+  @NotEmpty
+  private String orderId;
 
-	@NotEmpty
-	private String transactionAmount;
+  @NotEmpty
+  private String transactionAmount;
 
-	private Recurring recurring;
+  private Recurring recurring;
 
-	@NotEmpty
-	private String refNumber;
+  @NotEmpty
+  private String refNumber;
 
-	@Size(max = 10)
-	private String closeDate;
+  @Size(max = 10)
+  private String closeDate;
 }

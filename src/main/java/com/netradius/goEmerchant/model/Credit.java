@@ -1,21 +1,20 @@
-package com.netradius.goEmerchant.model;
+package com.netradius.goemerchant.model;
 
-import com.netradius.goEmerchant.model.MerchantInformation;
 import lombok.Data;
 import org.hibernate.validator.constraints.NotEmpty;
 
-import javax.validation.constraints.Size;
-
 /**
+ * Holds data for credit transaction.
+ *
  * @author Dilip S Sisodia
  */
 @Data
 public class Credit extends MerchantInformation {
-	private Recurring recurring;
+  private Recurring recurring;
 
-	@NotEmpty
-	private String refNumber;
+  @NotEmpty
+  private String refNumber;
 
-	@NotEmpty
-	private String transactionAmount;
+  @NotEmpty
+  private String transactionAmount;
 }

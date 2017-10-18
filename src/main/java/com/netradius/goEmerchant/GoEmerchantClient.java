@@ -1,6 +1,18 @@
-package com.netradius.goEmerchant;
+package com.netradius.goemerchant;
 
-import com.netradius.goEmerchant.model.*;
+import com.netradius.goemerchant.model.ApiResponse;
+import com.netradius.goemerchant.model.Authorize;
+import com.netradius.goemerchant.model.BatchClose;
+import com.netradius.goemerchant.model.Credit;
+import com.netradius.goemerchant.model.MerchantInformation;
+import com.netradius.goemerchant.model.Query;
+import com.netradius.goemerchant.model.ReAuthorize;
+import com.netradius.goemerchant.model.ReSale;
+import com.netradius.goemerchant.model.RecurringModify;
+import com.netradius.goemerchant.model.Sale;
+import com.netradius.goemerchant.model.Settle;
+import com.netradius.goemerchant.model.TransactionType;
+import com.netradius.goemerchant.model.VoidTransaction;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpResponse;
 import org.codehaus.jackson.map.ObjectMapper;
@@ -9,135 +21,73 @@ import org.codehaus.jackson.map.annotate.JsonSerialize;
 import java.io.IOException;
 
 /**
+ * GoEmerchant client.
+ *
  * @author Dilip S Sisodia
  */
 @Slf4j
 public class GoEmerchantClient {
 
-	private static final String GO_EMERCHANT_URL = "https://secure.1stpaygateway.net/secure/RestGW/Gateway/Transaction/";
+  private static final String GO_EMERCHANT_URL
+      = "https://secure.1stpaygateway.net/secure/RestGW/Gateway/Transaction/";
 
-	private ObjectMapper objectMapper;
-	private RestClient client;
-	private HttpResponse response;
+  private ObjectMapper objectMapper;
+  private RestClient client;
+  private HttpResponse response;
 
-	public GoEmerchantClient() {
-		objectMapper = new ObjectMapper();
-		objectMapper.setSerializationInclusion(JsonSerialize.Inclusion.NON_NULL);
-		client = new RestClient();
-	}
+  public GoEmerchantClient() {
+    objectMapper = new ObjectMapper();
+    objectMapper.setSerializationInclusion(JsonSerialize.Inclusion.NON_NULL);
+    client = new RestClient();
+  }
 
-	public ApiResponse authorize(Authorize authorize) {
-		try {
-			return client.httpPost(objectMapper.writeValueAsString(authorize), GO_EMERCHANT_URL + "Auth");
-//			return getResponseData(response);
-		}
-		catch (Exception ex) {
-			log.error("Error processing json data for request: " + ex.getMessage());
-		}
-		return null;
-	}
+  public ApiResponse authorize(Authorize authorize) {
+    return getResponseData(authorize, TransactionType.Auth);
+  }
 
-	public ApiResponse batchClose(BatchClose batchClose) {
-		try {
-			return client.httpPost(objectMapper.writeValueAsString(batchClose), GO_EMERCHANT_URL + "CloseBatch");
-//			return getResponseData(response);
-		} catch (Exception ex) {
-			log.error("Error processing json data for request: " + ex.getMessage());
-		}
-		return null;
-	}
+  public ApiResponse batchClose(BatchClose batchClose) {
+    return getResponseData(batchClose, TransactionType.CloseBatch);
+  }
 
-	public ApiResponse credit(Credit credit) {
-		try {
-			return client.httpPost(objectMapper.writeValueAsString(credit), GO_EMERCHANT_URL + "Credit");
-//			return getResponseData(response);
-		} catch (IOException ex) {
-			log.error("Error processing json data for request: " + ex.getMessage());
-		}
-		return null;
+  public ApiResponse credit(Credit credit) {
+    return getResponseData(credit, TransactionType.Credit);
+  }
 
-	}
+  public ApiResponse query(Query query) {
+    return getResponseData(query, TransactionType.Query);
+  }
 
-	public ApiResponse query(Query query) {
-		try {
-			return client.httpPost(objectMapper.writeValueAsString(query), GO_EMERCHANT_URL + "Query");
-//			return getResponseData(response);
-		} catch (IOException ex) {
-			log.error("Error processing json data for request: " + ex.getMessage());
-		}
-		return null;
+  public ApiResponse reAuthorize(ReAuthorize reAuthorize) {
+    return getResponseData(reAuthorize, TransactionType.ReAuth);
+  }
 
-	}
+  public ApiResponse recurringModify(RecurringModify recurringModify) {
+    return getResponseData(recurringModify, TransactionType.RecurringModify);
+  }
 
-	public ApiResponse reAuthorize(ReAuthorize reAuthorize) {
-		try {
-			return client.httpPost(objectMapper.writeValueAsString(reAuthorize), GO_EMERCHANT_URL + "ReAuth");
-//			return getResponseData(response);
-		} catch (IOException ex) {
-			log.error("Error processing json data for request: " + ex.getMessage());
-		}
-		return null;
+  public ApiResponse reSale(ReSale reSale) {
+    return getResponseData(reSale, TransactionType.ReSale);
+  }
 
-	}
+  public ApiResponse sale(Sale sale) {
+    return getResponseData(sale, TransactionType.Sale);
+  }
 
-	public ApiResponse recurringModify(RecurringModify recurringModify) {
-		try {
-			return client.httpPost(objectMapper.writeValueAsString(recurringModify), GO_EMERCHANT_URL + "RecurringModify");
-//			return getResponseData(response);
-		} catch (IOException ex) {
-			log.error("Error processing json data for request: " + ex.getMessage());
-		}
-		return null;
+  public ApiResponse settle(Settle settle) {
+    return getResponseData(settle, TransactionType.Settle);
+  }
 
-	}
+  public ApiResponse performVoid(VoidTransaction voidTransaction) {
+    return getResponseData(voidTransaction, TransactionType.Void);
+  }
 
-	public ApiResponse reSale(ReSale reSale) {
-		try {
-			return client.httpPost(objectMapper.writeValueAsString(reSale), GO_EMERCHANT_URL + "ReSale");
-//			return getResponseData(response);
-		} catch (IOException ex) {
-			log.error("Error processing json data for request: " + ex.getMessage());
-		}
-		return null;
-	}
-
-	public ApiResponse sale(Sale sale) {
-		try {
-			return client.httpPost(objectMapper.writeValueAsString(sale), GO_EMERCHANT_URL + "Sale");
-//			return getResponseData(response);
-		} catch (IOException ex) {
-			log.error("Error processing json data for request: " + ex.getMessage());
-		}
-		return null;
-	}
-
-	public ApiResponse settle(Settle settle) {
-		try {
-			return client.httpPost(objectMapper.writeValueAsString(settle), GO_EMERCHANT_URL + "Settle");
-//			return getResponseData(response);
-		} catch (IOException ex) {
-			log.error("Error processing json data for request: " + ex.getMessage());
-		}
-		return null;
-	}
-
-	public ApiResponse performVoid(VoidTransaction voidTransaction) {
-		try {
-			return client.httpPost(objectMapper.writeValueAsString(voidTransaction), GO_EMERCHANT_URL + "Void");
-//			return getResponseData(response);
-		} catch (IOException ex) {
-			log.error("Error processing json data for request: " + ex.getMessage());
-		}
-		return null;
-	}
-	
-	private ApiResponse getResponseData(HttpResponse response) {
-		try {
-			ApiResponse result = objectMapper.readValue (response.getEntity().getContent(), ApiResponse.class);
-			return result;
-		} catch (IOException ex) {
-			log.error("Error converting response data from json: " + ex.getMessage());
-		}
-		return null;
-	}
+  private ApiResponse getResponseData(MerchantInformation transactionData, TransactionType type) {
+    try {
+      return client.httpPost(
+          objectMapper.writeValueAsString(transactionData), GO_EMERCHANT_URL + type.name());
+    } catch (IOException ex) {
+      log.error("Error processing json data for request: " + ex.getMessage());
+    }
+    return null;
+  }
 }
