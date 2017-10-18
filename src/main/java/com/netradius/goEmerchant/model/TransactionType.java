@@ -1,13 +1,20 @@
-package com.netradius.goEmerchant.model;
+package com.netradius.goemerchant.model;
 
 /**
+ * Transaction type values.
+ *
  * @author Dilip S Sisodia
  */
 public enum TransactionType {
-	All,
-	Auth,
-	Credit,
-	Sale,
-	Settle,
-	Void
+  All,
+  Auth,
+  CloseBatch,
+  Credit,
+  Query,
+  ReAuth,
+  RecurringModify,
+  ReSale,
+  Sale,
+  Settle,
+  Void
 }

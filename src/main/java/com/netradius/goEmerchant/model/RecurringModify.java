@@ -1,4 +1,4 @@
-package com.netradius.goEmerchant.model;
+package com.netradius.goemerchant.model;
 
 import lombok.Data;
 import org.hibernate.validator.constraints.NotEmpty;
@@ -6,34 +6,36 @@ import org.hibernate.validator.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
 /**
+ * Holds data for modifying a recurring transaction.
+ *
  * @author Dilip S Sisodia
  */
 @Data
 public class RecurringModify extends MerchantInformation {
 
-	@NotEmpty
-	private String referenceNumber;
+  @NotEmpty
+  private String referenceNumber;
 
-	private String recurring;
+  private String recurring;
 
-	private Recurring recurringType;
+  private Recurring recurringType;
 
-	private String recurringStartDate;
+  private String recurringStartDate;
 
-	private String recurringEndDate;
+  private String recurringEndDate;
 
-	@NotEmpty
-	private String recurringAmount;
+  @NotEmpty
+  private String recurringAmount;
 
-	@Size(max = 10)
-	private String ownerZip;
+  @Size(max = 10)
+  private String ownerZip;
 
-	@Size(max = 25)
-	private String ownerPhone;
+  @Size(max = 25)
+  private String ownerPhone;
 
-	@Size(max = 300)
-	private String ownerEmail;
+  @Size(max = 300)
+  private String ownerEmail;
 
-	private String sendInvoice;
+  private String sendInvoice;
 
 }
